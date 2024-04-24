@@ -126,7 +126,8 @@ function removeEventListener(type: string) {
 function handleEvent(event: MouseEvent) {
     const newEvent = Object.assign(new Event(event.type, event), {
         zrX: event.offsetX,
-        zrY: event.offsetY
+        zrY: event.offsetY,
+        zrDelta: (event as any).wheelDelta
     })
 
     instance?.getZr().handler.dispatch(newEvent.type as EventType, newEvent)

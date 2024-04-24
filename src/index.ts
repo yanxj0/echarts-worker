@@ -16,7 +16,8 @@ const mousevents = [
     'mouseover',
     'mouseout',
     'mousemove',
-    'contextmenu'
+    'contextmenu',
+    'mousewheel'
 ] as const
 
 /**
@@ -157,13 +158,14 @@ function getEventBinders(worker: Worker) {
  */
 function registerMouseEvents(worker: Worker, canvas: HTMLCanvasElement) {
     mousevents.forEach(type => {
-        canvas.addEventListener(type, event => {
+        canvas.addEventListener(type, (event:any) => {
             worker.postMessage({
                 type: 'event',
                 event: {
                     type: event.type,
                     offsetX: event.offsetX,
-                    offsetY: event.offsetY
+                    offsetY: event.offsetY,
+                    wheelDelta: event.wheelDelta
                 }
             })
         })
